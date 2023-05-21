@@ -27,9 +27,9 @@ spec:
       sha256: 00fc69159ec0799cd2819559bd6a94e528c9a05049257272ae4dc55258a6d706
       # 'files' lists which files should be extracted out from downloaded archive
       files:
-        - from: "kubectl-kubeplugin-*/scripts/kubeplugin"
-          to: "kubectl-kubeplugin"
+        - from: "kubectl-kubeplugin-*/scripts/*"
+          to: "."
         - from: "kubectl-kubeplugin-*/LICENSE"
           to: "."
       # 'bin' specifies the path to the the plugin executable among extracted files
-      bin: "kubectl-kubeplugin"
+      bin: "kubeplugin"
