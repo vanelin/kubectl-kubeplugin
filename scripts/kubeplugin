@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Help section
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    echo "Usage: ./kubeplugin NAMESPACE RESOURCE_TYPE"
+    echo
+    echo "Retrieve resource usage statistics from Kubernetes."
+    echo
+    echo "Arguments:"
+    echo "  NAMESPACE      The namespace of the resources"
+    echo "  RESOURCE_TYPE  The type of resources to retrieve statistics for:"
+    echo "      node    Display resource (CPU/memory) usage of nodes"
+    echo "      pod     Display resource (CPU/memory) usage of pods"
+    exit 0
+fi
+
+# Check if required arguments are provided
+if [[ -z $1 || -z $2 ]]; then
+    echo "Error: Missing required arguments."
+    echo "Please run './kubeplugin --help' for usage information."
+    exit 1
+fi
+
+# Define command-line arguments
+NAMESPACE=$1
+RESOURCE_TYPE=$2
+
+# Output the column headers
+printf "%-10s %-12s %-50s %-12s %-12s\n" "Resource" "Namespace" "Name" "CPU(cores)" "MEMORY(bytes)"
+
+# Retrieve resource usage statistics from Kubernetes
+kubectl top $RESOURCE_TYPE -n $NAMESPACE | tail -n +2 | while read -r line; do
+    # Extract CPU and memory usage from the output
+    NAME=$(echo "$line" | awk '{print $1}')
+    CPU=$(echo "$line" | awk '{print $2}')
+    MEMORY=$(echo "$line" | awk '{print $3}')
+
+    # Output the statistics to the console
+    printf "%-10s %-12s %-50s %-12s %-12s\n" "$RESOURCE_TYPE" "$NAMESPACE" "$NAME" "$CPU" "$MEMORY"
+    # echo "$RESOURCE_TYPE, $NAMESPACE, $NAME, $CPU, $MEMORY"
+done
