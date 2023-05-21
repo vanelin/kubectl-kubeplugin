@@ -1,7 +1,9 @@
-# kubectl-ktop
-Plugin for Kubernetes to get statistics"
+# kubectl kubeplugin
+Plugin for Kubernetes to get statistics
 
 # Installation
+using curl:
+
 ```sh
 curl -LO https://raw.githubusercontent.com/vanelin/kubectl-kubeplugin/main/scripts/kubeplugin
 chmod +x ./kubeplugin
@@ -20,3 +22,5 @@ kubectl krew install vanelin/kubeplugin
 kubectl kubeplugin <namespace> <pod/node>
 kubectl kubeplugin --help
 ```
+
+[![asciicast](https://asciinema.org/a/586334.svg)](https://asciinema.org/a/586334)
